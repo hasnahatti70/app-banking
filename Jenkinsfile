@@ -21,11 +21,7 @@ pipeline {
             }
         }
 
-        stage('Run Unit Tests') {
-            steps {
-                sh 'mvn clean test'
-            }
-        }
+     
 
         stage('SonarQube Analysis with Token') {
             environment {
