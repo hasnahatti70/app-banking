@@ -25,7 +25,7 @@ pipeline {
 
         stage('SonarQube Analysis with Token') {
             environment {
-                SONAR_HOST_URL = 'http://https://sonarqube-v10-hasnahatti70-dev.apps.rm2.thpm.p1.openshiftapps.com/' // ← à remplacer par ton URL réelle sur OpenShift
+                SONAR_HOST_URL = 'https://sonarqube-v10-hasnahatti70-dev.apps.rm2.thpm.p1.openshiftapps.com/' // ← à remplacer par ton URL réelle sur OpenShift
             }
             steps {
                 withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
