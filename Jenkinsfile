@@ -43,8 +43,8 @@ pipeline {
         stage('Build & Run Docker Container') {
             steps {
                 sh """
-                    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
-                    docker run -d -p 8080:8080 --name banking-app ${IMAGE_NAME}:${IMAGE_TAG}
+                    docker build -t .
+                    docker run -d -p 8080:8080 --name banking-app 
                 """
             }
         }
