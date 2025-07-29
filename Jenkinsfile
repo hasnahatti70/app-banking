@@ -6,10 +6,7 @@ pipeline {
         IMAGE_TAG = "latest"
     }
 
-    tools {
-        maven 'Maven_3.8.1'
-        jdk 'jdk-17'
-    }
+   
 
     stages {
         stage('Checkout') {
