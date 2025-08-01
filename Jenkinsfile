@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SONAR_HOST_URL = 'https://sonarqube-v10-hasnahatti70-dev.apps.rm2.thpm.p1.openshiftapps.com/' // Remplace par ton URL réelle
+        SONAR_HOST_URL = 'https://sonarqube-v10-hasnahatti70-dev.apps.rm2.thpm.p1.openshiftapps.com'
     }
 
     stages {
@@ -12,7 +12,7 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis for PHP') {
+        stage('Analyse SonarQube') {
             steps {
                 withCredentials([string(credentialsId: 'banking-app', variable: 'SONAR_TOKEN')]) {
                     sh '''
