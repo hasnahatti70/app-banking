@@ -40,15 +40,7 @@ pipeline {
             }
         }
 
-        stage('Build & Run Docker Container') {
-            steps {
-                sh """
-                    docker build -t .
-                    docker run -d -p 8080:8080 --name banking-app 
-                """
-            }
-        }
-    }
+     
 
     post {
         always {
