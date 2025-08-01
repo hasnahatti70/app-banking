@@ -1,27 +1,32 @@
 pipeline {
     agent any
-
     environment {
-        SONAR_HOST_URL = 'https://sonarqube-v10-hasnahatti70-dev.apps.rm2.thpm.p1.openshiftapps.com'
+        IMAGE_NAME = "banking-app-local"
+        IMAGE_TAG = "latest"
     }
-
+   
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-
-        stage('Analyse SonarQube') {
+        stage('Build with Maven') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+     
+        stage('SonarQube Analysis with Token') {
+            environment {
+                SONAR_HOST_URL = 'https://sonarqube-v10-hasnahatti70-dev.apps.rm2.thpm.p1.openshiftapps.com/' // ← à remplacer par ton URL réelle sur OpenShift
+            }
             steps {
                 withCredentials([string(credentialsId: 'banking-app', variable: 'SONAR_TOKEN')]) {
                     sh '''
-                        sonar-scanner \
+                        mvn sonar:sonar \
                           -Dsonar.projectKey=banking-app \
                           -Dsonar.projectName=banking-app \
-                          -Dsonar.sources=. \
-                          -Dsonar.language=php \
-                          -Dsonar.sourceEncoding=UTF-8 \
                           -Dsonar.host.url=${SONAR_HOST_URL} \
                           -Dsonar.login=${SONAR_TOKEN}
                     '''
@@ -29,7 +34,7 @@ pipeline {
             }
         }
     }
-
+     
     post {
         always {
             cleanWs()
